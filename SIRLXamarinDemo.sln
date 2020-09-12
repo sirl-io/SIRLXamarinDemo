@@ -1,7 +1,7 @@
 
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIRLTutorial", "SIRLTutorial\SIRLTutorial.csproj", "{04C933A5-181F-4442-9601-EE40D65FEF05}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIRLDemo", "SIRLDemo\SIRLDemo.csproj", "{04C933A5-181F-4442-9601-EE40D65FEF05}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

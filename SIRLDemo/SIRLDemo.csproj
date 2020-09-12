@@ -99,9 +99,16 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher_foreground.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher_round.png" />
+    <AndroidResource Include="Resources\layout\activity_search.xml" />
+    <AndroidResource Include="Resources\layout\content_search.xml" />
+    <AndroidResource Include="Resources\layout\activity_shopping_list.xml" />
+    <AndroidResource Include="Resources\layout\content_shopping_list.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
+    <Folder Include="Retail\" />
+    <Folder Include="Retail\Search\" />
+    <Folder Include="Retail\ShoppingList\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Android.Support.Design" Version="28.0.0.3" />
@@ -112,7 +119,7 @@
       <Version>0.0.1.3</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.AndroidX.Migration">
-      <Version>1.0.6.2</Version>
+      <Version>1.0.7</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.AndroidX.Browser">
       <Version>1.2.0.2</Version>

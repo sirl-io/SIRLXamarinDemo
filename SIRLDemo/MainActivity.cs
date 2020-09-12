@@ -11,7 +11,6 @@ using AndroidX.AppCompat.App;
 using AndroidX.Core.Content;
 using AndroidX.Core.App;
 
-using Google.Android.Material.FloatingActionButton;
 using Google.Android.Material.Snackbar;
 
 using Com.Sirl.Core;
@@ -67,9 +66,6 @@ namespace SIRLTutorial
 
             AndroidX.AppCompat.Widget.Toolbar toolbar = FindViewById<AndroidX.AppCompat.Widget.Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
-
-            FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
-            fab.Click += FabOnClick;
 
             mExternalLogger = ExternalLogger.Instance;
             mTripStateListener = new TutorialTripStateListener(this, mExternalLogger);
@@ -150,7 +146,6 @@ namespace SIRLTutorial
             //         location.GetY()
             //     );
             //Toast.MakeText(this, locationString, ToastLength.Short).Show();
-
         }
 
         private void setupSirl()
@@ -172,7 +167,7 @@ namespace SIRLTutorial
                     //We disable background mode here to allow manual control, but
                     //this can be enabled to allow the system to automatically handle
                     //location update state.
-                    .EnableBackgroundMode(false)
+                    .EnableAutoTripStartStop(false)
                     .UseMappedLocationResolver(new TutorialMappedLocationResolver(Android.App.Application.Context))
                     .UseLocationEngine(new TutorialEngine())
                     .UseLocationFilters(createTestLocationFilters())
@@ -183,6 +178,8 @@ namespace SIRLTutorial
             config.SetLocationConfig(locationProviderConfig);
 
             mSirlManager = SirlPipsManager.GetInstance(config);
+
+            SirlPipsManager.GetInstance(Application.Context).StartLocationUpdates();
 
             mSirlSearchFragment.RegisterRouteStatusListener(new TutorialRouteStatusListener());
             mSirlSearchFragment.AttachMapFragment(mSirlMapFragment);
@@ -269,9 +266,15 @@ namespace SIRLTutorial
 
                 Random rand = new Random();
 
+                //Location randomLocation = new Location(
+                //        11.5 + rand.NextDouble() - 0.5,
+                //        4.5 + rand.NextDouble() - 0.5,
+                //        1.5
+                //);
+
                 Location randomLocation = new Location(
-                        11.5 + rand.NextDouble() - 0.5,
-                        4.5 + rand.NextDouble() - 0.5,
+                        20.7 + rand.NextDouble() - 0.5,
+                        17 + rand.NextDouble() - 0.5,
                         1.5
                 );
 
@@ -292,7 +295,7 @@ namespace SIRLTutorial
                 //test environment. This can be returned many or a single time - 
                 //this decision is left up to the client.
 
-                cb.EnteredLocation(new MappedLocation(10));
+                cb.EnteredLocation(new MappedLocation(21));
             }
         }
 
