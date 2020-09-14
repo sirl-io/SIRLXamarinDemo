@@ -1,80 +1,89 @@
 ﻿using System;
+
+using Android;
 using Android.App;
-using Android.Content;
+using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
 using Android.Util;
 using Android.Views;
-
+using Android.Content;
 
 using AndroidX.AppCompat.App;
-using AndroidX.Core.Content;
+using AndroidX.CardView.Widget;
 using AndroidX.Core.App;
+using AndroidX.Core.Content;
 
 using Google.Android.Material.Snackbar;
 
 using Com.Sirl.Core;
-using Com.Sirl.Core.Listeners;
 using Com.Sirl.Core.Location;
 using Com.Sirl.Core.Recording;
-using Com.Sirl.Mapping;
-using Com.Sirl.Retail.UI;
-using Android.Widget;
-using Android.Content.PM;
-using Android;
-using Com.Sirl.Core.Models;
 using Com.Sirl.Core.Location.Filters;
-using Com.Sirl.Mapping.Routeutils;
+using Com.Sirl.Core.Models;
 
-namespace SIRLTutorial
+namespace SIRLDemo
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
-    public class MainActivity : AppCompatActivity, ILocationUpdateListener
+    public class MainActivity : AppCompatActivity, View.IOnClickListener
     {
-        private const String TAG = "ShoppersPortal";
+        private const String TAG = "MainActivity";
 
-        //Example External Trip ID. This value may be a String or Integer.
-        private const String EXAMPLE_EXTERNAL_TRIP_ID_STRING = "EXAMPLE_EXT_TRIP_ID";
-        private const int EXAMPLE_EXTERNAL_TRIP_ID_INT = 123;
-
-        //Example External User ID. This value may be a String or Integer.
-        private const String EXAMPLE_EXTERNAL_USER_ID_STRING = "EXAMPLE_EXT_USER_ID";
-        private const int EXAMPLE_EXTERNAL_USER_ID_INT = 321;
-
-        private const String EXAMPLE_PRODUCT_COLLECTED_ID = "EXAMPLE_PRODUCT_ID";
-        private const String EXAMPLE_TRANSACTION_DATA = "{\n" +
-           "    \"total\": 39.22,\n" +
-           "    \"productsCollected\": [\n" +
-           "        {\n" +
-           "            \"upc\": \"EXAMPLE_PRODUCT_ID\",\n" +
-           "            \"quantity\": 2\n" +
-           "        }\n" +
-           "    ]\n" +
-           "}";
-
-        private SirlPipsManager mSirlManager;
-        private TripStateListener mTripStateListener;
         private ExternalLogger mExternalLogger;
-        private SirlMapFragment mSirlMapFragment;
-        private SearchFragment mSirlSearchFragment;
+        private SirlPipsManager mSirlManager;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+            var id = Resource.Layout.activity_main;
             SetContentView(Resource.Layout.activity_main);
 
             AndroidX.AppCompat.Widget.Toolbar toolbar = FindViewById<AndroidX.AppCompat.Widget.Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
 
             mExternalLogger = ExternalLogger.Instance;
-            mTripStateListener = new TutorialTripStateListener(this, mExternalLogger);
 
-            mSirlMapFragment = (SirlMapFragment)SupportFragmentManager.FindFragmentById(Resource.Id.map);
-            mSirlSearchFragment = (SearchFragment)SupportFragmentManager.FindFragmentById(Resource.Id.search_bar);
+            CardView search_card = (CardView)FindViewById(Resource.Id.search_card);
+            CardView list_card = (CardView)FindViewById(Resource.Id.list_card);
+            CardView next_item_card = (CardView)FindViewById(Resource.Id.next_item_card);
+
+            search_card.SetOnClickListener(this);
+            list_card.SetOnClickListener(this);
+            next_item_card.SetOnClickListener(this);
 
             setupSirl();
         }
+
+        public void OnClick(Android.Views.View? v)
+        {
+            Intent activityIntent = null;
+
+            if (v == null)
+            {
+                return;
+            }
+
+            if (v.Id == Resource.Id.search_card)
+            {
+                activityIntent = new Intent(this, typeof(SearchActivity));
+            }
+            else if(v.Id == Resource.Id.list_card)
+            {
+                activityIntent = new Intent(this, typeof(ShoppingListActivity));
+            }
+            else if (v.Id == Resource.Id.next_item_card)
+            {
+                activityIntent = new Intent(this, typeof(ShoppingListActivity));
+            }
+                
+
+            if (activityIntent != null)
+            {
+                StartActivity(activityIntent);
+            }
+        }
+
 
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
@@ -91,13 +100,6 @@ namespace SIRLTutorial
             }
 
             return base.OnOptionsItemSelected(item);
-        }
-
-        private void FabOnClick(object sender, System.EventArgs eventArgs)
-        {
-            View view = (View)sender;
-            Snackbar.Make(view, "Replace with your own action", Snackbar.LengthLong)
-                .SetAction("Action", (Android.Views.View.IOnClickListener)null).Show();
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
@@ -122,30 +124,15 @@ namespace SIRLTutorial
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
-        protected override void OnDestroy()
+        private void FabOnClick(object sender, System.EventArgs eventArgs)
         {
-            base.OnDestroy();
-
-            if (mSirlManager != null)
-            {
-                mSirlManager.DeregisterTripStateListener(mTripStateListener);
-                mSirlManager.DeregisterLocationListener(this);
-                mSirlManager.StopLocationUpdates();
-            }
+            View view = (View)sender;
+            Snackbar.Make(view, "Replace with your own action", Snackbar.LengthLong)
+                .SetAction("Action", (Android.Views.View.IOnClickListener)null).Show();
         }
 
-        public void OnLocationUpdate(Location location)
+        protected override void OnDestroy()
         {
-            //
-            // Quick Start - Toast Location Updates
-            //
-            //string locationString =
-            //     string.Format(
-            //         "Your position is x:{0:F2}, y:{1:F2}",
-            //         location.GetX(),
-            //         location.GetY()
-            //     );
-            //Toast.MakeText(this, locationString, ToastLength.Short).Show();
         }
 
         private void setupSirl()
@@ -160,7 +147,21 @@ namespace SIRLTutorial
             }
         }
 
-        private void initializeSirl()
+        private Boolean hasPermissions()
+        {
+            if (Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.M)
+            {
+                return !((ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessCoarseLocation)
+                            != (int)Permission.Granted)
+                        || (ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessFineLocation)
+                            != (int)Permission.Granted)
+                        || (ContextCompat.CheckSelfPermission(this, Manifest.Permission.Internet)
+                            != (int)Permission.Granted));
+            }
+            return true;
+        }
+
+        public void initializeSirl()
         {
             LocationProviderConfig locationProviderConfig =
                 new LocationProviderConfig.Builder(Android.App.Application.Context)
@@ -178,46 +179,9 @@ namespace SIRLTutorial
             config.SetLocationConfig(locationProviderConfig);
 
             mSirlManager = SirlPipsManager.GetInstance(config);
-
-            SirlPipsManager.GetInstance(Application.Context).StartLocationUpdates();
-
-            mSirlSearchFragment.RegisterRouteStatusListener(new TutorialRouteStatusListener());
-            mSirlSearchFragment.AttachMapFragment(mSirlMapFragment);
-
-            mSirlManager.RegisterTripStateListener(mTripStateListener);
-            mSirlManager.RegisterLocationListener(this);
             mSirlManager.StartLocationUpdates();
         }
 
-        private Boolean hasPermissions()
-        {
-            if (Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.M)
-            {
-                return !((ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessCoarseLocation)
-                            != (int)Permission.Granted)
-                        || (ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessFineLocation)
-                            != (int)Permission.Granted)
-                        || (ContextCompat.CheckSelfPermission(this, Manifest.Permission.Internet)
-                            != (int)Permission.Granted));
-            }
-            return true;
-        }
-
-        private void requestPermissions()
-        {
-            ActivityCompat.RequestPermissions(this, new String[]
-                    {Manifest.Permission.AccessFineLocation,
-            Manifest.Permission.AccessCoarseLocation,
-            Manifest.Permission.Internet}, 1);
-        }
-
-        private LocationFilters createTestLocationFilters()
-        {
-            return new LocationFilters.Builder()
-                    .ShouldLockToRegion(false)
-                    .ShouldPredict(false)
-                    .Build();
-        }
 
         private class TutorialEngine : SirlLocationEngine
         {
@@ -249,36 +213,29 @@ namespace SIRLTutorial
             {
                 mHandler.RemoveCallbacksAndMessages(null);
             }
-        }
 
-
-        private class RandomPositionRunnable : Java.Lang.Object, Java.Lang.IRunnable
-        {
-            TutorialEngine mEngine = null;
-            public RandomPositionRunnable(TutorialEngine engine)
+            private class RandomPositionRunnable : Java.Lang.Object, Java.Lang.IRunnable
             {
-                mEngine = engine;
-            }
+                TutorialEngine mEngine = null;
+                public RandomPositionRunnable(TutorialEngine engine)
+                {
+                    mEngine = engine;
+                }
 
-            public void Run()
-            {
-                mEngine.mHandler.PostDelayed(this, 1000);
+                public void Run()
+                {
+                    mEngine.mHandler.PostDelayed(this, 1000);
 
-                Random rand = new Random();
+                    Random rand = new Random();
 
-                //Location randomLocation = new Location(
-                //        11.5 + rand.NextDouble() - 0.5,
-                //        4.5 + rand.NextDouble() - 0.5,
-                //        1.5
-                //);
+                    Location randomLocation = new Location(
+                            11.5 + rand.NextDouble() - 0.5,
+                            4.5 + rand.NextDouble() - 0.5,
+                            1.5
+                    );
 
-                Location randomLocation = new Location(
-                        20.7 + rand.NextDouble() - 0.5,
-                        17 + rand.NextDouble() - 0.5,
-                        1.5
-                );
-
-                mEngine.Update(randomLocation);
+                    mEngine.Update(randomLocation);
+                }
             }
         }
 
@@ -289,77 +246,24 @@ namespace SIRLTutorial
 
             public override void DetermineMappedLocation(IMappedLocationResolveCallback cb)
             {
-                //This hook is automatically invoked periodically. This is used
-                //to determine the ranging state of the user (e.g. entered, left, 
-                //or no change). For this tutorial, we continuously return the 
-                //test environment. This can be returned many or a single time - 
-                //this decision is left up to the client.
-
-                cb.EnteredLocation(new MappedLocation(21));
+                cb.EnteredLocation(new MappedLocation(10));
             }
         }
 
-        private class TutorialRouteStatusListener : Java.Lang.Object, IRouteStatusListener
+        private LocationFilters createTestLocationFilters()
         {
-            public void OnRouteStart()
-            {
-                Log.Debug("ShopperPortal", "Route start!");
-            }
-
-            public void OnRouteComplete()
-            {
-                Log.Debug("ShopperPortal", "Route complete!");
-            }
-
-            public void OnRouteFail(RouteError routeError)
-            {
-                Log.Error("ShopperPortal", "Route error: " + routeError.Message);
-            }
+            return new LocationFilters.Builder()
+                    .ShouldLockToRegion(true)
+                    .ShouldPredict(false)
+                    .Build();
         }
 
-        private class TutorialTripStateListener : TripStateListener
+        private void requestPermissions()
         {
-            private Context context;
-            private ExternalLogger externalLogger;
-
-            public TutorialTripStateListener(Context context, ExternalLogger logger)
-            {
-                this.context = context;
-                this.externalLogger = logger;
-            }
-
-            public override void OnTripStart()
-            {
-                //Signifies that the trip has begun. One or more of the
-                //calls for before the trip should be used in this hook.
-                Log.Debug(TAG, "Trip Started");
-                Toast.MakeText(
-                      context,
-                      "Trip Started.",
-                      ToastLength.Short
-                ).Show();
-
-                //Record User ID and Trip ID here. One of the String/Integer interfaces
-                //may be used.
-
-                //String interfaces
-                externalLogger.RecordExternalUserId(EXAMPLE_EXTERNAL_USER_ID_STRING);
-                externalLogger.RecordExternalTripId(EXAMPLE_EXTERNAL_TRIP_ID_STRING);
-            }
-
-            public override void OnTripStop()
-            {
-                //Signifies that the trip has begun. One or more of the
-                //calls for after the trip should be used in this hook.
-                Log.Debug(TAG, "Trip Stopped");
-                Toast.MakeText(
-                      context,
-                      "Trip Ended.",
-                      ToastLength.Short
-                ).Show();
-
-                externalLogger.RecordTransactionLog(EXAMPLE_TRANSACTION_DATA);
-            }
+            ActivityCompat.RequestPermissions(this, new String[]
+                    {Manifest.Permission.AccessFineLocation,
+            Manifest.Permission.AccessCoarseLocation,
+            Manifest.Permission.Internet}, 1);
         }
     }
 }

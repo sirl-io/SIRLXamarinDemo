@@ -10,8 +10,8 @@
     <TemplateGuid>{84dd83c5-0fe3-4294-9419-09e7c8ba324f}</TemplateGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SIRLTutorial</RootNamespace>
-    <AssemblyName>SIRLTutorial</AssemblyName>
+    <RootNamespace>SIRLDemo</RootNamespace>
+    <AssemblyName>SIRLDemo</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <Deterministic>True</Deterministic>
     <AndroidApplication>True</AndroidApplication>
@@ -61,8 +61,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
-    <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MainApplication.cs" />
+    <Compile Include="Retail\Search\SeachActivity.cs" />
+    <Compile Include="Resources\Resource.designer.cs" />
+    <Compile Include="Retail\ShoppingList\ShoppingListActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -100,9 +103,17 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher_foreground.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher_round.png" />
     <AndroidResource Include="Resources\layout\activity_search.xml" />
-    <AndroidResource Include="Resources\layout\content_search.xml" />
     <AndroidResource Include="Resources\layout\activity_shopping_list.xml" />
     <AndroidResource Include="Resources\layout\content_shopping_list.xml" />
+    <AndroidResource Include="Resources\drawable\semi_circle_bg.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\content_shopping_list_map.xml" />
+    <AndroidResource Include="Resources\layout\content_search.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
