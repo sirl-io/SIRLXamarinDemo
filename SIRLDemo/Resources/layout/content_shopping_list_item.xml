@@ -1,0 +1,55 @@
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:padding="8dp">
+
+    <RelativeLayout
+        android:id="@+id/row"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:background="@drawable/list_item_bg"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true">
+        
+        <TextView
+            android:id="@+id/shopping_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/qty_layout"
+            android:gravity="center_vertical"
+            android:padding="8dp"
+            android:text="ITEM NAME"
+            android:textColor="@color/colorBlack"
+            tools:ignore="HardcodedText" />
+
+        <LinearLayout
+            android:id="@+id/qty_layout"
+            android:orientation="horizontal"
+            android:layout_width="64dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+           android:layout_alignParentEnd="true">
+                <TextView
+                    android:id="@+id/shopping_item_quantity_lbl"
+                    android:text="QTY"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:paddingRight="8dp"/>
+                <TextView
+                    android:id="@+id/shopping_item_quantity"
+                    android:text="2"
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    tools:ignore="HardcodedText" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="sirl_demo_apps">演示应用</string>
+    <string name="sirl_demo_search">SIRL: 地图和搜索</string>
+    <string name="sirl_demo_retailers_list">零售商的购物清单</string>
+    <string name="sirl_demo_sirl_list_widgets">SIRL：列表和下一个项目视图</string>
+
+    <string name="route_to_list">路线清单</string>
+</resources>

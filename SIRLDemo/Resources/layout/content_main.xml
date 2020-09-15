@@ -40,7 +40,7 @@
                 android:layout_gravity="center_horizontal"
                 android:ellipsize="none"
                 android:singleLine="false"
-                android:text="Map and Search" />
+                android:text="@string/sirl_demo_search" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -67,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Shopping List" />
+                android:text="@string/sirl_demo_retailers_list" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -81,7 +81,8 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         app:cardCornerRadius="8dp"
-        app:cardElevation="8dp">
+        app:cardElevation="8dp"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -94,7 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="List and Next Item View" />
+                android:text="@string/sirl_demo_sirl_list_widgets" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </GridLayout>

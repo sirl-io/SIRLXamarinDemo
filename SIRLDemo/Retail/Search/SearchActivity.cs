@@ -19,6 +19,7 @@ using Com.Sirl.Core.Recording;
 using Com.Sirl.Mapping;
 using Com.Sirl.Retail.UI;
 using Com.Sirl.Mapping.Routeutils;
+using System.Collections.Generic;
 
 namespace SIRLDemo
 {
@@ -97,7 +98,7 @@ namespace SIRLDemo
 
         private class TutorialRouteStatusListener : Java.Lang.Object, IRouteStatusListener
         {
-            public void OnRouteStart()
+            public void OnRouteStart(IList<IRoutedObject> p0)
             {
                 Log.Debug("ShopperPortal", "Route start!");
             }

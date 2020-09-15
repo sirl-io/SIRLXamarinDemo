@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-    <string name="app_name">SIRLDemo</string>
+    <string name="app_name">SIRL Demo</string>
     <string name="action_settings">Settings</string>
+
+    <string name="sirl_demo_apps">Demo Apps</string>
+    <string name="sirl_demo_search">SIRL: Map and Search</string>
+    <string name="sirl_demo_retailers_list">Retailer\'s Shopping List</string>
+    <string name="sirl_demo_sirl_list_widgets">SIRL: List and Next Item Views</string>
+
+    <string name="route_to_list">Route to List</string>
+    <string name="route_mising_products">Non-Routed Products</string>
 </resources>

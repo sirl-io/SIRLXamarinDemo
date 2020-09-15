@@ -131,10 +131,6 @@ namespace SIRLDemo
                 .SetAction("Action", (Android.Views.View.IOnClickListener)null).Show();
         }
 
-        protected override void OnDestroy()
-        {
-        }
-
         private void setupSirl()
         {
             if (hasPermissions())

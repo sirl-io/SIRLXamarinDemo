@@ -4,12 +4,43 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/activity_shopping_list">
-
-    <TextView
+    android:layout_height="match_parent">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="List Placeholder"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/list"
+            android:scrollbars="vertical"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_gravity="top"
+			android:layout_weight="5.0"
+			tools:listitem="@layout/content_shopping_list_item" />
+        <TextView
+            android:id="@+id/missing_lbl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Non-Routed Products"
+			android:layout_weight="1.0"
+            android:minHeight="32dp"
+            android:visibility="gone"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/missing_list"
+            android:scrollbars="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+			android:layout_weight="2.0"
+            android:layout_gravity="top"
+            tools:listitem="@layout/content_shopping_list_item"
+            android:visibility="gone"/>
+    </LinearLayout>
+    <Button
+        android:id="@+id/route_list_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:text="@string/route_to_list"/>
 </RelativeLayout>
+
