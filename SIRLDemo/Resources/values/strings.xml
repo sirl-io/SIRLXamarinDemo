@@ -10,4 +10,8 @@
 
     <string name="route_to_list">Route to List</string>
     <string name="route_mising_products">Non-Routed Products</string>
+    
+    <string name="search_demo">Search Demo</string>
+    <string name="List">List</string>
+    <string name="Map">Map</string>
 </resources>

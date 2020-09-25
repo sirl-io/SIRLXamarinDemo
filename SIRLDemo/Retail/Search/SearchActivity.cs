@@ -23,7 +23,7 @@ using System.Collections.Generic;
 
 namespace SIRLDemo
 {
-    [Activity(Label = "Search Demo", Theme = "@style/AppTheme.NoActionBar")]
+    [Activity(Label = "@string/search_demo", Theme = "@style/AppTheme.NoActionBar")]
     public class SearchActivity : AppCompatActivity, ILocationUpdateListener
     {
         private const string TAG = "SearchActivity";

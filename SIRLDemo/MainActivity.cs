@@ -242,7 +242,7 @@ namespace SIRLDemo
 
             public override void DetermineMappedLocation(IMappedLocationResolveCallback cb)
             {
-                cb.EnteredLocation(new MappedLocation(10));
+                cb.EnteredLocation(MappedLocation.TestLocation);
             }
         }
 

@@ -38,7 +38,7 @@
            android:layout_alignParentEnd="true">
                 <TextView
                     android:id="@+id/shopping_item_quantity_lbl"
-                    android:text="QTY"
+                    android:text="@string/sirl_qty_label"
                     android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"

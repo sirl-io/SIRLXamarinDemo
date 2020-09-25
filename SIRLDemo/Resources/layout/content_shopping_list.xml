@@ -21,7 +21,7 @@
             android:id="@+id/missing_lbl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Non-Routed Products"
+            android:text="@string/route_mising_products"
 			android:layout_weight="1.0"
             android:minHeight="32dp"
             android:visibility="gone"/>

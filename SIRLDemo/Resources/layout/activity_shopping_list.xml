@@ -44,11 +44,11 @@
             android:id="@+id/list_tab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="List"/>
+            android:text="@string/List"/>
         <com.google.android.material.tabs.TabItem
             android:id="@+id/map_tab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Map"/>
+            android:text="@string/Map"/>
     </com.google.android.material.tabs.TabLayout>
 </RelativeLayout>

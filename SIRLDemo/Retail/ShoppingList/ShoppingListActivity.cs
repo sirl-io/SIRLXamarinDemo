@@ -215,18 +215,22 @@ namespace SIRLDemo
             }
         }
 
-        public void OnRouteEvent(RetailRouteEvent p0)
+        public void OnRouteEvent(RetailRouteEvent retail_event)
         {
             //This is where designers can hook in pop-ups
-            Log.Info(TAG, "Received: " + p0.ToString());
+            if (retail_event.Event == RetailRouteEvent.EventProductReached)
+            {
+                    string sku = retail_event.RoutedStoreProduct.ProductId;
+                    //PromptUserToCollectSKU(sku);
+            }
         }
 
         public void OnProductLookup(IList<StoreProduct> products, IList<string> missing)
         {
             // This is where SIRL provides information on what products are
-            // available (known locations) in the store and those that are
-            // missing.
-            foreach(var sku in missing)
+            // available (and their corresponding known locations) in the store and 
+            // those that are missing.
+            foreach (var sku in missing)
             {
                 var index = getSkuIndex(sku);
                 if(index >= 0)
@@ -276,9 +280,36 @@ namespace SIRLDemo
             Log.Info(TAG, "Completed Route");
         }
 
-        public void OnRouteFail(RetailRouteError p0)
+        public void OnRouteFail(RetailRouteError error)
         {
-            Log.Error(TAG, "Route Error: " + p0.ToString());
+            Log.Error(TAG, "Route Error: " + error.ToString());
+
+            switch (error.Error)
+            {
+                case RetailRouteError.HasUnknownUpcs:
+                case RetailRouteError.ContextRefIsNull:
+                    //This indicates a setup error
+                    //Log, trigger reporting to your internal system
+                    break;
+
+                case RetailRouteError.InvalidUserLocation:
+                case RetailRouteError.UnableToConnectToServer:
+                case RetailRouteError.UnableToGetValidRoute:
+                case RetailRouteError.RouteHelperNotReady:
+                    //Retry Routing - these errors should not occur, but could
+                    // be due to timing issues.
+                    //SIRL recommends using a back-off algorithm or
+                    // limiting the number of retries.
+                    break;
+
+                case RetailRouteError.InvalidMappedLocation:
+                default:
+                    //Log, report, and contact SIRL Support
+                    break;
+            }
+
+            //If the error is not recoverable or retries have been exhausted
+            // Alert User
         }
 
         public void OnRouteStart(IList<RoutedStoreProduct> ordered_list)

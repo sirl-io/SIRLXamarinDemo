@@ -2,8 +2,12 @@
 <resources>
     <string name="sirl_demo_apps">Демо-приложения</string>
     <string name="sirl_demo_search">SIRL: Карта и поиск</string>
-    <string name="sirl_demo_retailers_list">Список покупок продавца</string>
+    <string name="sirl_demo_retailers_list">Список покупок покупателя</string>
     <string name="sirl_demo_sirl_list_widgets">SIRL: Виджеты списка и следующего элемента</string>
     
-    <string name="route_to_list">Маршрут к списку</string>
+    <string name="route_to_list">Построить маршрут</string>
+    
+    <string name="search_demo">Поиск товаров</string>
+    <string name="List">Список покупок</string>
+    <string name="Map">Карта магазина</string>
 </resources>
