@@ -32,7 +32,12 @@ using static Android.Views.View;
 namespace SIRLDemo
 {
     [Activity(Label = "@string/sirl_demo_retailers_list", Theme = "@style/AppTheme.NoActionBar")]
-    public class ShoppingListActivity : AppCompatActivity, ILocationUpdateListener, IOnClickListener, IRetailRouteStatusListener, IRetailRouteEventListener
+    public class ShoppingListActivity : AppCompatActivity,
+        ILocationUpdateListener,
+        IOnClickListener,
+        IOnMapReadyCallback,
+        IRetailRouteStatusListener,
+        IRetailRouteEventListener
     {
         private const string TAG = "SearchActivity";
 
@@ -74,6 +79,7 @@ namespace SIRLDemo
             SetupTabs();
             SetupShoppingList();
             SetupShoppingListViews();
+            SetupRouteButton();
         }
 
         private void SetupTabs()
@@ -110,9 +116,15 @@ namespace SIRLDemo
 
             missingAdapter = new ShoppingListAdapter(missingList);
             missingListView.SetAdapter(missingAdapter);
+        }
 
+        private void SetupRouteButton()
+        {
             Button route = FindViewById<Button>(Resource.Id.route_list_btn);
             route.SetOnClickListener(this);
+            route.Enabled = false;
+
+            mSirlMapFragment.RegisterMapReadyCallback(this);
         }
 
         public void OnClick(View v)
@@ -339,6 +351,21 @@ namespace SIRLDemo
             }
 
             shoppingList.AddRange(ordered_items);
+        }
+
+        public void OnMapError(string p0)
+        {
+            Log.Error(TAG, p0);
+            Toast.MakeText(this, "Error Loading Map.", ToastLength.Short).Show();
+        }
+
+        public void OnMapReady(SirlMap p0)
+        {
+            Button route = FindViewById<Button>(Resource.Id.route_list_btn);
+            if(route != null)
+            {
+                route.Enabled = true;
+            }
         }
 
         private class TabSelectionListener : Java.Lang.Object, TabLayout.IOnTabSelectedListener
